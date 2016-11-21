@@ -1311,6 +1311,32 @@ describe("duplex", function() {
                 value: null
             }]);
         });
+
+        it('should not remove undefined', function() {
+            var objA = {
+                user: undefined
+            };
+            var objB = {
+                user: undefined
+            };
+
+            expect(jsonpatch.compare(objA, objB)).toReallyEqual([]);
+        })
+
+        it("should replace 0 with empty string", function () {
+            var objA = {
+                user: 0
+            };
+            var objB = {
+                user: ''
+            };
+
+            expect(jsonpatch.compare(objA, objB)).toReallyEqual([{
+                op: "replace",
+                path: "/user",
+                value: ''
+            }]);
+        });
     });
 
 

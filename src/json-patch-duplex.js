@@ -347,13 +347,13 @@ var jsonpatch;
         for (var t = oldKeys.length - 1; t >= 0; t--) {
             var key = oldKeys[t];
             var oldVal = mirror[key];
-            if (obj.hasOwnProperty(key) && !(obj[key] === undefined && _isArray(obj) === false)) {
+            if (obj.hasOwnProperty(key) && !(obj[key] === undefined && _isArray(obj) === false && oldVal !== undefined)) {
                 var newVal = obj[key];
                 if (typeof oldVal == "object" && oldVal != null && typeof newVal == "object" && newVal != null) {
                     _generate(oldVal, newVal, patches, path + "/" + escapePathComponent(key));
                 }
                 else {
-                    if (oldVal != newVal) {
+                    if (oldVal !== newVal) {
                         changed = true;
                         patches.push({ op: "replace", path: path + "/" + escapePathComponent(key), value: deepClone(newVal) });
                     }
